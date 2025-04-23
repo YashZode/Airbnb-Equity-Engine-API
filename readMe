@@ -1,0 +1,115 @@
+
+# 🏡 Airbnb Equity Engine API
+
+A Flask-based backend API that promotes fairness and accessibility in Airbnb listings using machine learning. It evaluates listings, computes neighborhood fairness scores, and offers actionable tips for improving listing inclusivity.
+
+---
+
+## 📦 Features
+
+- ✅ Predict **listing fairness** using a trained logistic regression model  
+- 📊 Compute **fairness scores by neighborhood**  
+- 🧠 Recommend listings that are both **affordable and accessible**  
+- 💡 Provide **AI-based smart tips** to improve listing fairness  
+
+---
+
+## 📁 Dataset Used
+
+The model uses a cleaned and preprocessed Airbnb dataset (`airbnb.csv`) that contains:
+- Price, Beds, Room Type, Property Type
+- Review Scores Rating
+- Neighborhood info
+
+Fairness is determined based on:
+- **Affordability** (bottom 25% price)
+- **Accessibility** (≥2 beds and not a shared room)
+
+---
+
+## 🚀 Endpoints
+
+### 1. `/api/fairness-scores`  
+**Method:** GET  
+Returns sorted fairness scores per neighborhood.
+
+**Response:**
+```json
+[
+  {
+    "Neighbourhood": "Mission",
+    "Listings": 112,
+    "Avg_Price": 152.34,
+    "Fair_Listings": 45,
+    "Accessible_Listings": 62,
+    "Avg_Rating": 96.3,
+    "Fairness_Score": 82.74
+  }
+]
+```
+
+---
+
+### 2. `/api/listing-fairness`  
+**Method:** POST  
+**Description:** Predicts whether a listing is fair.
+
+**Request Body:**
+```json
+{
+  "price": 120,
+  "beds": 2,
+  "room_type": "Entire home/apt",
+  "property_type": "Apartment",
+  "review_score": 92
+}
+```
+
+**Response:**
+```json
+{
+  "predicted_fair_listing": 1
+}
+```
+
+---
+
+### 3. `/api/recommend-fair-listings`  
+**Method:** GET  
+Returns 10 random listings that meet fairness criteria.
+
+---
+
+### 4. `/api/ai-suggestion`  
+**Method:** POST  
+Returns fairness prediction and tips to improve listing fairness.
+
+**Response:**
+```json
+{
+  "predicted_fair": 0,
+  "smart_tip": "Consider reducing your price to under $90. Improve your review score by enhancing the guest experience."
+}
+```
+
+---
+
+## ⚙️ How to Run
+
+```bash
+pip install flask pandas scikit-learn numpy
+python airbnb.py
+```
+
+---
+
+## 📂 File Structure
+
+```
+├── airbnb.py                   # Main Flask API script
+├── airbnb.csv              # Airbnb dataset
+├── README.md               # Project overview (this file)
+```
+
+---
+ 
